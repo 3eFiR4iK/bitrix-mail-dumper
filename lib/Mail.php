@@ -26,12 +26,16 @@ class Mail
 
     public function addMessage($to, $subject, $message, $type)
     {
+        if (!is_dir($_SERVER['DOCUMENT_ROOT'] . $this->path)) {
+            mkdir($_SERVER['DOCUMENT_ROOT'] . $this->path);
+        }
+
         if ($subject != '') {
             $message = "<h2>Тема: ". base64_decode($subject) ."</h2><br>" . $message;
         }
 
         $fileName = $to . '--' . $type . '--' . time() . '.html';
-        file_put_contents($_SERVER['DOCUMENT_ROOT'] . $this->path . $fileName, nl2br($message));
+        return file_put_contents($_SERVER['DOCUMENT_ROOT'] . $this->path . $fileName, $message);
     }
 
     public function getPath(): string

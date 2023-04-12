@@ -26,8 +26,6 @@ if ($mail->getHandleParam()) {
             $subject = '';
         }
 
-        $mail->addMessage($to, $subject, $message, trim($match[1]));
-
-        return true;
+        return $mail->addMessage($to, $subject, $message, trim($match[1]));
     }
 }

@@ -83,6 +83,11 @@ $files = $mail->getList();
         <? else: ?>
             <a href="?handle=Y" class="adm-btn">Включить отслеживание сообщений</a>
         <? endif; ?>
+
+        <div>
+            <input type="checkbox" onchange="changeWhiteSpace()" id="use-white-space">
+            <label for="use-white-space">Использовать whitespace</label>
+        </div>
     </div>
     <div class="messages-wrapper">
         <div class="message-list">
@@ -95,15 +100,28 @@ $files = $mail->getList();
             <? endforeach; ?>
         </div>
         <div class="message-preview">
-            <iframe id="message-preview-frame" src="" frameborder="0"></iframe>
+            <iframe id="message-preview-frame" onload="frameLoaded()" src="" frameborder="0"></iframe>
         </div>
     </div>
 
 
     <script>
+        function frameLoaded() {
+            changeWhiteSpace()
+        }
+
+        function changeWhiteSpace() {
+            let frameWindow = document.getElementById('message-preview-frame').contentWindow
+
+            if (document.getElementById('use-white-space').checked) {
+                frameWindow.document.body.style = "white-space: pre;"
+            } else {
+                frameWindow.document.body.style = ""
+            }
+        }
+
         for (let message of document.getElementsByClassName('message-file')) {
             message.addEventListener('click', function (e) {
-                debugger
                 for (let file of document.getElementsByClassName('message-file--active')) {
                     file.classList.toggle('message-file--active')
                 }
