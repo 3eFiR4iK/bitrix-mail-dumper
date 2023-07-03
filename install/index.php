@@ -52,10 +52,25 @@ class AAbushinov_maildumper extends CModule
         ModuleManager::registerModule($this->MODULE_ID);
         $root = Application::getDocumentRoot();
         CopyDirFiles(__DIR__ . '/bitrix', $root.'/bitrix', true, true);
+
+        RegisterModuleDependences(
+            'main',
+            'onProlog',
+            $this->MODULE_ID,
+            '\\AAbushinov\\MailDumper\\MainEvent',
+            'onProlog'
+        );
     }
 
     public function DoUninstall()
     {
+        UnRegisterModuleDependences(
+            'main',
+            'onProlog',
+            $this->MODULE_ID,
+            '\\AAbushinov\\MailDumper\\MainEvent',
+            'onProlog'
+        );
         ModuleManager::unRegisterModule($this->MODULE_ID);
     }
 }
