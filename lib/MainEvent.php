@@ -6,6 +6,6 @@ class MainEvent
 {
     public static function onProlog()
     {
-        CModule::IncludeModule('aabushinov.maildumper');
+        \CModule::IncludeModule('aabushinov.maildumper');
     }
 }
